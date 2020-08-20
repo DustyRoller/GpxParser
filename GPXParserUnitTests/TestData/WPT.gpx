@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<gpx creator="Garmin Connect" version="1.1"
+  xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/11.xsd"
+  xmlns:ns3="http://www.garmin.com/xmlschemas/TrackPointExtension/v1"
+  xmlns="http://www.topografix.com/GPX/1/1"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns2="http://www.garmin.com/xmlschemas/GpxExtensions/v3">
+  <wpt lat="46.0" lon="9.0">
+    <ele>46.1</ele>
+    <name>WPT data 1</name>
+    <desc>Description</desc>
+  </wpt>
+  <wpt lat="42.5" lon="9.5">
+    <ele>46.2</ele>
+    <name>WPT data 2</name>
+    <desc>Description</desc>
+  </wpt>
+  <wpt lat="43.3" lon="-1.1">
+    <ele>46.3</ele>
+    <name>WPT data 3</name>
+    <desc>Description</desc>
+  </wpt>
+</gpx>
