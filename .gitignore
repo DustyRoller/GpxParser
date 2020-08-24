@@ -1,0 +1,5 @@
+/.vs/*
+/GPXParser/bin/*
+/GPXParser/obj/*
+/GPXParserUnitTests/bin/*
+/GPXParserUnitTests/obj/*
