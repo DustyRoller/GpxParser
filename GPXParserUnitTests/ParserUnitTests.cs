@@ -75,18 +75,21 @@ namespace GPXParserUnitTests
 
             // Should have 3 WPT entries.
             Assert.AreEqual(3, gpxFile.wpt.Length);
+
             // First wpt.
             Assert.AreEqual(46.0M, gpxFile.wpt[0].lat);
             Assert.AreEqual(9.0M, gpxFile.wpt[0].lon);
             Assert.AreEqual(46.1M, gpxFile.wpt[0].ele);
             Assert.AreEqual("WPT data 1", gpxFile.wpt[0].name);
             Assert.AreEqual("Description", gpxFile.wpt[0].desc);
+
             // Second wpt.
             Assert.AreEqual(42.5M, gpxFile.wpt[1].lat);
             Assert.AreEqual(9.5M, gpxFile.wpt[1].lon);
             Assert.AreEqual(46.2M, gpxFile.wpt[1].ele);
             Assert.AreEqual("WPT data 2", gpxFile.wpt[1].name);
             Assert.AreEqual("Description", gpxFile.wpt[1].desc);
+
             // Third wpt.
             Assert.AreEqual(43.3M, gpxFile.wpt[2].lat);
             Assert.AreEqual(-1.1M, gpxFile.wpt[2].lon);

@@ -5,6 +5,9 @@ using System.Xml.Serialization;
 
 namespace GPXParser
 {
+    /// <summary>
+    /// Class to provide functionality to parse a GPX file.
+    /// </summary>
     public static class Parser
     {
         /// <summary>
@@ -33,7 +36,6 @@ namespace GPXParser
 
                     using (var reader = XmlReader.Create(fileStream))
                     {
-
                         var gpxFile = (gpxType)xmlSerializer.Deserialize(reader);
 
                         gpxFile.CalculateStats();

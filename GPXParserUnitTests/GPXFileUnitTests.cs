@@ -31,6 +31,7 @@ namespace GPXParserUnitTests
         public void GPXFile_Duration_ReturnsNegativeTimespanWithNegativeDuration()
         {
             var startTime = new DateTime(2000, 1, 1, 1, 0, 0);
+
             // Set the end time to be before the start time.
             var endTime = startTime.Subtract(new TimeSpan(2, 2, 2));
 

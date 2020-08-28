@@ -12,18 +12,20 @@ namespace GPXParser
     {
         /// <summary>
         /// The duration of the activity defined in the GPX file.
+        /// <summary>
+        /// Gets the duration of the activity defined in the GPX file.
         /// </summary>
         [XmlIgnoreAttribute]
-        public TimeSpan Duration { get; private set; } = new TimeSpan();
+        public TimeSpan Duration { get; private set; } = default;
 
         /// <summary>
-        /// The activity's elevation gain in metres as defined by the schema
+        /// Gets the activity's elevation gain in metres as defined by the schema.
         /// </summary>
         [XmlIgnoreAttribute]
         public decimal ElevationGain { get; private set; } = 0.0M;
 
         /// <summary>
-        /// The activity's elevation loss in metres as defined by the schema
+        /// Gets the activity's elevation loss in metres as defined by the schema.
         /// </summary>
         [XmlIgnoreAttribute]
         public decimal ElevationLoss { get; private set; } = 0.0M;
@@ -60,7 +62,7 @@ namespace GPXParser
             {
                 // Use the first and last track points to determine the duration.
                 var startTime = trkField[0].trkseg[0].trkpt[0].time;
-                var endTime = trkField[0].trkseg[0].trkpt[(^1)].time;
+                var endTime = trkField[0].trkseg[0].trkpt[^1].time;
 
                 Duration = endTime.Subtract(startTime);
             }
