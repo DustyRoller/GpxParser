@@ -11,7 +11,11 @@ namespace GPXParser
     public partial class gpxType
     {
         /// <summary>
-        /// The duration of the activity defined in the GPX file.
+        /// Gets the culmulative distance of the points within the activity.
+        /// </summary>
+        [XmlIgnoreAttribute]
+        public double Distance { get; private set; }
+
         /// <summary>
         /// Gets the duration of the activity defined in the GPX file.
         /// </summary>
@@ -35,6 +39,7 @@ namespace GPXParser
         /// </summary>
         public void CalculateStats()
         {
+            CalculateDistance();
             CalculateDuration();
             CalculateElevationGain();
             CalculateElevationLoss();
@@ -47,10 +52,39 @@ namespace GPXParser
         public override string ToString()
         {
             var sb = new StringBuilder();
+            sb.AppendLine($"Distance: {Distance}");
             sb.AppendLine($"Duration: {Duration}");
             sb.AppendLine($"Elevation gain: {ElevationGain}");
             sb.AppendLine($"Elevation Loss {ElevationLoss}");
             return sb.ToString();
+        }
+
+        /// <summary>
+        /// Calculate the total distance of the activity.
+        /// </summary>
+        private void CalculateDistance()
+        {
+            if (trk != null)
+            {
+                var trkPts = trkField[0].trkseg[0].trkpt;
+
+                for (int i = 1; i < trkPts.Length; ++i)
+                {
+                    var location1 = new Location()
+                    {
+                        Latitude = (double)trkPts[i - 1].lat,
+                        Longitude = (double)trkPts[i - 1].lon
+                    };
+
+                    var location2 = new Location()
+                    {
+                        Latitude = (double)trkPts[i].lat,
+                        Longitude = (double)trkPts[i].lon
+                    };
+
+                    Distance += Location.CalculateDistance(location1, location2);
+                }
+            }
         }
 
         /// <summary>
@@ -69,7 +103,7 @@ namespace GPXParser
         }
 
         /// <summary>
-        /// Calculate the total elevation gain of the activity..
+        /// Calculate the total elevation gain of the activity.
         /// </summary>
         private void CalculateElevationGain()
         {
