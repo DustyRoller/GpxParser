@@ -52,10 +52,10 @@ namespace GPXParser
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.AppendLine($"Distance: {Distance}");
+            sb.AppendLine($"Distance: {Distance}km");
             sb.AppendLine($"Duration: {Duration}");
-            sb.AppendLine($"Elevation gain: {ElevationGain}");
-            sb.AppendLine($"Elevation Loss {ElevationLoss}");
+            sb.AppendLine($"Elevation gain: {ElevationGain}m");
+            sb.AppendLine($"Elevation Loss {ElevationLoss}m");
             return sb.ToString();
         }
 
@@ -84,6 +84,9 @@ namespace GPXParser
 
                     Distance += Location.CalculateDistance(location1, location2);
                 }
+
+                // Convert distance to Km and limit to 2 decimal places.
+                Distance = Math.Round(Distance / 1000, 2);
             }
         }
 

@@ -54,7 +54,27 @@ namespace GPXParserUnitTests
 
             var distance = Location.CalculateDistance(firstLocation, secondLocation);
 
-            Assert.AreEqual(13.15, distance);
+            Assert.AreEqual(13145.5, distance, 0.1);
+        }
+
+        [TestMethod]
+        public void Location_CalculateDistance_Successful_HighPrecision()
+        {
+            var firstLocation = new Location
+            {
+                Latitude = 51.0d,
+                Longitude = 0.0d
+            };
+
+            var secondLocation = new Location
+            {
+                Latitude = 51.000005d,
+                Longitude = 0.000005d
+            };
+
+            var distance = Location.CalculateDistance(firstLocation, secondLocation);
+
+            Assert.AreEqual(0.657, distance, 0.001);
         }
     }
 }
