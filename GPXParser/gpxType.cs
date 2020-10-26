@@ -73,13 +73,13 @@ namespace GPXParser
                     var location1 = new Location()
                     {
                         Latitude = (double)trkPts[i - 1].lat,
-                        Longitude = (double)trkPts[i - 1].lon
+                        Longitude = (double)trkPts[i - 1].lon,
                     };
 
                     var location2 = new Location()
                     {
                         Latitude = (double)trkPts[i].lat,
-                        Longitude = (double)trkPts[i].lon
+                        Longitude = (double)trkPts[i].lon,
                     };
 
                     Distance += Location.CalculateDistance(location1, location2);

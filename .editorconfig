@@ -9,8 +9,5 @@ dotnet_diagnostic.SA1101.severity = none
 # SA1200: Using directives should be placed correctly
 dotnet_diagnostic.SA1200.severity = none
 
-# SA1413: Use trailing comma in multi-line initializers
-dotnet_diagnostic.SA1413.severity = none
-
 # SA1633: File should have header
 dotnet_diagnostic.SA1633.severity = none
