@@ -16,7 +16,7 @@ namespace GPXParserUnitTests
             var secondLocation = new Location
             {
                 Latitude = 51.1d,
-                Longitude = 0.1d
+                Longitude = 0.1d,
             };
 
             Location.CalculateDistance(firstLocation, secondLocation);
@@ -29,7 +29,7 @@ namespace GPXParserUnitTests
             var firstLocation = new Location
             {
                 Latitude = 51.0d,
-                Longitude = 0.0d
+                Longitude = 0.0d,
             };
 
             Location secondLocation = null;
@@ -43,13 +43,13 @@ namespace GPXParserUnitTests
             var firstLocation = new Location
             {
                 Latitude = 51.0d,
-                Longitude = 0.0d
+                Longitude = 0.0d,
             };
 
             var secondLocation = new Location
             {
                 Latitude = 51.1d,
-                Longitude = 0.1d
+                Longitude = 0.1d,
             };
 
             var distance = Location.CalculateDistance(firstLocation, secondLocation);
@@ -63,13 +63,13 @@ namespace GPXParserUnitTests
             var firstLocation = new Location
             {
                 Latitude = 51.0d,
-                Longitude = 0.0d
+                Longitude = 0.0d,
             };
 
             var secondLocation = new Location
             {
                 Latitude = 51.000005d,
-                Longitude = 0.000005d
+                Longitude = 0.000005d,
             };
 
             var distance = Location.CalculateDistance(firstLocation, secondLocation);

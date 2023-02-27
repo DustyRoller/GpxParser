@@ -13,25 +13,25 @@ namespace GPXParser
         /// <summary>
         /// Gets the culmulative distance of the points within the activity.
         /// </summary>
-        [XmlIgnoreAttribute]
+        [XmlIgnore]
         public double Distance { get; private set; }
 
         /// <summary>
         /// Gets the duration of the activity defined in the GPX file.
         /// </summary>
-        [XmlIgnoreAttribute]
+        [XmlIgnore]
         public TimeSpan Duration { get; private set; } = default;
 
         /// <summary>
         /// Gets the activity's elevation gain in metres as defined by the schema.
         /// </summary>
-        [XmlIgnoreAttribute]
+        [XmlIgnore]
         public decimal ElevationGain { get; private set; } = 0.0M;
 
         /// <summary>
         /// Gets the activity's elevation loss in metres as defined by the schema.
         /// </summary>
-        [XmlIgnoreAttribute]
+        [XmlIgnore]
         public decimal ElevationLoss { get; private set; } = 0.0M;
 
         /// <summary>
