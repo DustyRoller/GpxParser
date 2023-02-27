@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Runtime.Serialization;
 
 namespace GPXParser
 {
     /// <summary>
     /// Exception class for GPX Parser related exceptions.
     /// </summary>
+    [Serializable]
     public class ParserException : Exception
     {
         /// <summary>
@@ -35,6 +37,16 @@ namespace GPXParser
             : base(message, innerException)
         {
             // Nothing to do.
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ParserException"/> class.
+        /// </summary>
+        /// <param name="info">The information for serializing.</param>
+        /// <param name="context">The context for serializing.</param>
+        protected ParserException(SerializationInfo info, StreamingContext context)
+            : base(info, context)
+        {
         }
     }
 }

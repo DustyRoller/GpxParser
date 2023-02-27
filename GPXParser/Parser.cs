@@ -25,7 +25,7 @@ namespace GPXParser
             // Make sure the file exists.
             if (!File.Exists(filePath))
             {
-                throw new ArgumentException($"File {filePath} doesn't exist");
+                throw new FileNotFoundException($"File {filePath} doesn't exist");
             }
 
             try

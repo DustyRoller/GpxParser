@@ -15,18 +15,18 @@ namespace GPXParserUnitTests
                 new wptType()
                 {
                     lat = 51.0M,
-                    lon = 0.0M
+                    lon = 0.0M,
                 },
                 new wptType()
                 {
                     lat = 51.1M,
-                    lon = 0.1M
+                    lon = 0.1M,
                 },
                 new wptType()
                 {
                     lat = 51.0M,
-                    lon = 0.0M
-                }
+                    lon = 0.0M,
+                },
             };
 
             var gpxFile = CreateGPXFile(trackPoints);
@@ -45,8 +45,8 @@ namespace GPXParserUnitTests
             {
                 new wptType()
                 {
-                    time = startTime
-                }
+                    time = startTime,
+                },
             };
 
             var gpxFile = CreateGPXFile(trackPoints);
@@ -68,12 +68,12 @@ namespace GPXParserUnitTests
             {
                 new wptType()
                 {
-                    time = startTime
+                    time = startTime,
                 },
                 new wptType()
                 {
-                    time = endTime
-                }
+                    time = endTime,
+                },
             };
 
             var gpxFile = CreateGPXFile(trackPoints);
@@ -93,12 +93,12 @@ namespace GPXParserUnitTests
             {
                 new wptType()
                 {
-                    time = startTime
+                    time = startTime,
                 },
                 new wptType()
                 {
-                    time = endTime
-                }
+                    time = endTime,
+                },
             };
 
             var gpxFile = CreateGPXFile(trackPoints);
@@ -119,16 +119,16 @@ namespace GPXParserUnitTests
             {
                 new wptType()
                 {
-                    ele = elevation1
+                    ele = elevation1,
                 },
                 new wptType()
                 {
-                    ele = elevation2
+                    ele = elevation2,
                 },
                 new wptType()
                 {
-                    ele = elevation3
-                }
+                    ele = elevation3,
+                },
             };
 
             var gpxFile = CreateGPXFile(trackPoints);
@@ -150,16 +150,16 @@ namespace GPXParserUnitTests
             {
                 new wptType()
                 {
-                    ele = elevation1
+                    ele = elevation1,
                 },
                 new wptType()
                 {
-                    ele = elevation2
+                    ele = elevation2,
                 },
                 new wptType()
                 {
-                    ele = elevation3
-                }
+                    ele = elevation3,
+                },
             };
 
             var gpxFile = CreateGPXFile(trackPoints);
@@ -180,16 +180,16 @@ namespace GPXParserUnitTests
             {
                 new wptType()
                 {
-                    ele = elevation1
+                    ele = elevation1,
                 },
                 new wptType()
                 {
-                    ele = elevation2
+                    ele = elevation2,
                 },
                 new wptType()
                 {
-                    ele = elevation3
-                }
+                    ele = elevation3,
+                },
             };
 
             var gpxFile = CreateGPXFile(trackPoints);
@@ -211,16 +211,16 @@ namespace GPXParserUnitTests
             {
                 new wptType()
                 {
-                    ele = elevation1
+                    ele = elevation1,
                 },
                 new wptType()
                 {
-                    ele = elevation2
+                    ele = elevation2,
                 },
                 new wptType()
                 {
-                    ele = elevation3
-                }
+                    ele = elevation3,
+                },
             };
 
             var gpxFile = CreateGPXFile(trackPoints);
@@ -242,16 +242,16 @@ namespace GPXParserUnitTests
             {
                 new wptType()
                 {
-                    ele = elevation1
+                    ele = elevation1,
                 },
                 new wptType()
                 {
-                    ele = elevation2
+                    ele = elevation2,
                 },
                 new wptType()
                 {
-                    ele = elevation3
-                }
+                    ele = elevation3,
+                },
             };
 
             var gpxFile = CreateGPXFile(trackPoints);
@@ -272,16 +272,16 @@ namespace GPXParserUnitTests
             {
                 new wptType()
                 {
-                    ele = elevation1
+                    ele = elevation1,
                 },
                 new wptType()
                 {
-                    ele = elevation2
+                    ele = elevation2,
                 },
                 new wptType()
                 {
-                    ele = elevation3
-                }
+                    ele = elevation3,
+                },
             };
 
             var gpxFile = CreateGPXFile(trackPoints);
@@ -297,7 +297,7 @@ namespace GPXParserUnitTests
         /// </summary>
         /// <param name="trackPoints">The TrackPoints to use.</param>
         /// <returns>A gpxType.</returns>
-        private gpxType CreateGPXFile(wptType[] trackPoints)
+        private static gpxType CreateGPXFile(wptType[] trackPoints)
         {
             var gpxFile = new gpxType()
             {
@@ -309,11 +309,11 @@ namespace GPXParserUnitTests
                         {
                             new trksegType
                             {
-                                trkpt = trackPoints
-                            }
-                        }
-                    }
-                }
+                                trkpt = trackPoints,
+                            },
+                        },
+                    },
+                },
             };
 
             // Make sure to calculate the stats for this file.
