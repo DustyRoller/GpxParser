@@ -2,7 +2,7 @@
 using System.Text;
 using System.Xml.Serialization;
 
-namespace GPXParser
+namespace GpxParser
 {
     /// <summary>
     /// Partial class to provide some analysis on the GPX file
