@@ -1,16 +1,18 @@
-﻿using GPXParser;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using GpxParser;
+using NUnit.Framework;
 using System;
 
-namespace GPXParserUnitTests
+namespace GpxParserUnitTests
 {
-    [TestClass]
+    [TestFixture]
     public class LocationUnitTests
     {
-        [TestMethod]
-        [ExpectedExceptionWithMessage(typeof(ArgumentNullException), "Value cannot be null. (Parameter 'firstLocation')")]
+        [TestCase]
         public void Location_CalculateDistance_ThrowsExceptionWithNullFirstLocation()
         {
+            // Converting null literal or possible null value to non-nullable type.
+            // Possible null reference argument.
+#pragma warning disable CS8600, CS8604
             Location firstLocation = null;
 
             var secondLocation = new Location
@@ -19,11 +21,13 @@ namespace GPXParserUnitTests
                 Longitude = 0.1d,
             };
 
-            Location.CalculateDistance(firstLocation, secondLocation);
+            var ex = Assert.Throws<ArgumentNullException>(() => Location.CalculateDistance(firstLocation, secondLocation));
+#pragma warning restore CS8604, CS8600
+
+            Assert.That(ex?.Message, Is.EqualTo("Value cannot be null. (Parameter 'firstLocation')"));
         }
 
-        [TestMethod]
-        [ExpectedExceptionWithMessage(typeof(ArgumentNullException), "Value cannot be null. (Parameter 'secondLocation')")]
+        [TestCase]
         public void Location_CalculateDistance_ThrowsExceptionWithNullSecondLocation()
         {
             var firstLocation = new Location
@@ -32,12 +36,18 @@ namespace GPXParserUnitTests
                 Longitude = 0.0d,
             };
 
+            // Converting null literal or possible null value to non-nullable type.
+            // Possible null reference argument.
+#pragma warning disable CS8600, CS8604
             Location secondLocation = null;
 
-            Location.CalculateDistance(firstLocation, secondLocation);
+            var ex = Assert.Throws<ArgumentNullException>(() => Location.CalculateDistance(firstLocation, secondLocation));
+#pragma warning restore CS8604, CS8600
+
+            Assert.That(ex?.Message, Is.EqualTo("Value cannot be null. (Parameter 'secondLocation')"));
         }
 
-        [TestMethod]
+        [TestCase]
         public void Location_CalculateDistance_Successful()
         {
             var firstLocation = new Location
@@ -54,10 +64,10 @@ namespace GPXParserUnitTests
 
             var distance = Location.CalculateDistance(firstLocation, secondLocation);
 
-            Assert.AreEqual(13145.5, distance, 0.1);
+            Assert.That(distance, Is.EqualTo(13145.5).Within(0.1));
         }
 
-        [TestMethod]
+        [TestCase]
         public void Location_CalculateDistance_Successful_HighPrecision()
         {
             var firstLocation = new Location
@@ -74,7 +84,7 @@ namespace GPXParserUnitTests
 
             var distance = Location.CalculateDistance(firstLocation, secondLocation);
 
-            Assert.AreEqual(0.657, distance, 0.001);
+            Assert.That(distance, Is.EqualTo(0.657).Within(0.001));
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GPXParser
+namespace GpxParser
 {
     /// <summary>
     /// Class defining a location with latitude and longitude values.

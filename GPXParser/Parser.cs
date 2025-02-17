@@ -1,15 +1,31 @@
 ﻿using System;
 using System.IO;
-using System.Xml;
 using System.Xml.Serialization;
 
-namespace GPXParser
+namespace GpxParser
 {
     /// <summary>
     /// Class to provide functionality to parse a GPX file.
     /// </summary>
     public static class Parser
     {
+        /// <summary>
+        /// Deserialize the data within the given XML file in object of type T.
+        /// </summary>
+        /// <typeparam name="T">The type of object to be created.</typeparam>
+        /// <param name="filePath">The path to the XML file to be read in.</param>
+        /// <returns>If successful an object of type T, otherwise null.</returns>
+        public static T? DeserializeToObject<T>(string filePath)
+            where T : class
+        {
+            var xmlSerializer = new XmlSerializer(typeof(T), "http://www.topografix.com/GPX/1/1");
+
+            using (var streamReader = new StreamReader(filePath))
+            {
+                return xmlSerializer.Deserialize(streamReader) as T;
+            }
+        }
+
         /// <summary>
         /// Parse the provided GPX file and convert it into a GPXFile object.
         /// </summary>
@@ -30,19 +46,16 @@ namespace GPXParser
 
             try
             {
-                using (var fileStream = File.Open(filePath, FileMode.Open))
+                var gpxFile = DeserializeToObject<gpxType>(filePath);
+
+                if (gpxFile == null)
                 {
-                    var xmlSerializer = new XmlSerializer(typeof(gpxType), "http://www.topografix.com/GPX/1/1");
-
-                    using (var reader = XmlReader.Create(fileStream))
-                    {
-                        var gpxFile = (gpxType)xmlSerializer.Deserialize(reader);
-
-                        gpxFile.CalculateStats();
-
-                        return gpxFile;
-                    }
+                    throw new ParserException($"Failed to parse {filePath}");
                 }
+
+                gpxFile.CalculateStats();
+
+                return gpxFile;
             }
             catch (InvalidOperationException ex)
             {

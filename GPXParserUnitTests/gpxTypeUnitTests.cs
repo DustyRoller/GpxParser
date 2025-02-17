@@ -1,13 +1,13 @@
-using GPXParser;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using GpxParser;
+using NUnit.Framework;
 using System;
 
 namespace GPXParserUnitTests
 {
-    [TestClass]
+    [TestFixture]
     public class gpxTypeUnitTests
     {
-        [TestMethod]
+        [TestCase]
         public void gpxType_Distance_CalculatedSuccessfully()
         {
             var trackPoints = new wptType[]
@@ -33,10 +33,10 @@ namespace GPXParserUnitTests
 
             var distance = gpxFile.Distance;
 
-            Assert.AreEqual(26.3, distance, 0.1);
+            Assert.That(distance, Is.EqualTo(26.3).Within(0.1));
         }
 
-        [TestMethod]
+        [TestCase]
         public void gpxType_Duration_ReturnsZeroWithSingleTrackPoint()
         {
             var startTime = DateTime.Now;
@@ -53,13 +53,13 @@ namespace GPXParserUnitTests
 
             var duration = gpxFile.Duration;
 
-            Assert.AreEqual(new TimeSpan(), duration);
+            Assert.That(duration, Is.EqualTo(new TimeSpan()));
         }
 
-        [TestMethod]
+        [TestCase]
         public void gpxType_Duration_ReturnsNegativeTimespanWithNegativeDuration()
         {
-            var startTime = new DateTime(2000, 1, 1, 1, 0, 0);
+            var startTime = new DateTime(2000, 1, 1, 1, 0, 0, DateTimeKind.Utc);
 
             // Set the end time to be before the start time.
             var endTime = startTime.Subtract(new TimeSpan(2, 2, 2));
@@ -80,13 +80,13 @@ namespace GPXParserUnitTests
 
             var duration = gpxFile.Duration;
 
-            Assert.AreEqual(endTime.Subtract(startTime), duration);
+            Assert.That(duration, Is.EqualTo(endTime.Subtract(startTime)));
         }
 
-        [TestMethod]
+        [TestCase]
         public void gpxType_Duration_CalculatedSuccessfully()
         {
-            var startTime = new DateTime(2000, 1, 1, 1, 0, 0);
+            var startTime = new DateTime(2000, 1, 1, 1, 0, 0, DateTimeKind.Utc);
             var endTime = startTime.Add(new TimeSpan(2, 2, 2));
 
             var trackPoints = new wptType[]
@@ -105,10 +105,10 @@ namespace GPXParserUnitTests
 
             var duration = gpxFile.Duration;
 
-            Assert.AreEqual(endTime.Subtract(startTime), duration);
+            Assert.That(duration, Is.EqualTo(endTime.Subtract(startTime)));
         }
 
-        [TestMethod]
+        [TestCase]
         public void gpxType_ElevationGain_CalculatedSuccessfully()
         {
             var elevation1 = 10.1M;
@@ -136,10 +136,10 @@ namespace GPXParserUnitTests
             var expectedElevationGain = (elevation2 - elevation1) + (elevation3 - elevation2);
             var elevationGain = gpxFile.ElevationGain;
 
-            Assert.AreEqual(expectedElevationGain, elevationGain);
+            Assert.That(elevationGain, Is.EqualTo(expectedElevationGain));
         }
 
-        [TestMethod]
+        [TestCase]
         public void gpxType_ElevationGain_CalculatedSuccessfullyWithNoElevationGain()
         {
             var elevation1 = 10.1M;
@@ -166,10 +166,10 @@ namespace GPXParserUnitTests
 
             var elevationGain = gpxFile.ElevationGain;
 
-            Assert.AreEqual(0.0M, elevationGain);
+            Assert.That(elevationGain, Is.EqualTo(0.0M));
         }
 
-        [TestMethod]
+        [TestCase]
         public void gpxType_ElevationGain_CalculatedSuccessfullyWithElevationLoss()
         {
             var elevation1 = 10.1M;
@@ -197,10 +197,10 @@ namespace GPXParserUnitTests
             var expectedElevationGain = (elevation3 - elevation2);
             var elevationGain = gpxFile.ElevationGain;
 
-            Assert.AreEqual(expectedElevationGain, elevationGain);
+            Assert.That(elevationGain, Is.EqualTo(expectedElevationGain));
         }
 
-        [TestMethod]
+        [TestCase]
         public void gpxType_ElevationLoss_CalculatedSuccessfully()
         {
             var elevation1 = 22.5M;
@@ -228,10 +228,10 @@ namespace GPXParserUnitTests
             var expectedElevationLoss = (elevation1 - elevation2) + (elevation2 - elevation3);
             var elevationLoss = gpxFile.ElevationLoss;
 
-            Assert.AreEqual(expectedElevationLoss, elevationLoss);
+            Assert.That(elevationLoss, Is.EqualTo(expectedElevationLoss));
         }
 
-        [TestMethod]
+        [TestCase]
         public void gpxType_ElevationLoss_CalculatedSuccessfullyWithNoElevationLoss()
         {
             var elevation1 = 8.5M;
@@ -258,10 +258,10 @@ namespace GPXParserUnitTests
 
             var elevationLoss = gpxFile.ElevationLoss;
 
-            Assert.AreEqual(0.0M, elevationLoss);
+            Assert.That(elevationLoss, Is.EqualTo(0.0M));
         }
 
-        [TestMethod]
+        [TestCase]
         public void gpxType_ElevationLoss_CalculatedSuccessfullyWithElevationGain()
         {
             var elevation1 = 9.0M;
@@ -289,7 +289,7 @@ namespace GPXParserUnitTests
             var expectedElevationLoss = (elevation2 - elevation3);
             var elevationLoss = gpxFile.ElevationLoss;
 
-            Assert.AreEqual(expectedElevationLoss, elevationLoss);
+            Assert.That(elevationLoss, Is.EqualTo(expectedElevationLoss));
         }
 
         /// <summary>

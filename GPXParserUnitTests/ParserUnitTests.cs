@@ -1,11 +1,11 @@
-﻿using GPXParser;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using GpxParser;
+using NUnit.Framework;
 using System;
 using System.IO;
 
-namespace GPXParserUnitTests
+namespace GpxParserUnitTests
 {
-    [TestClass]
+    [TestFixture]
     public class ParserUnitTests
     {
         /// <summary>
@@ -13,95 +13,107 @@ namespace GPXParserUnitTests
         /// </summary>
         private const string TestDataDir = "TestData";
 
-        [TestMethod]
-        [ExpectedExceptionWithMessage(typeof(ArgumentException), "File path is invalid")]
+        [TestCase]
         public void Parser_Parse_FailsWithNullFilePath()
         {
-            Parser.Parse(null);
+            // Converting null literal or possible null value to non-nullable type.
+            // Possible null reference argument.
+#pragma warning disable CS8600, CS8604
+            string filePath = null;
+            var ex = Assert.Throws<ArgumentException>(() => Parser.Parse(filePath));
+#pragma warning restore CS8604, CS8600
+
+            Assert.That(ex?.Message, Is.EqualTo("File path is invalid"));
         }
 
-        [TestMethod]
-        [ExpectedExceptionWithMessage(typeof(ArgumentException), "File path is invalid")]
+        [TestCase]
         public void Parser_Parse_FailsWithInvalidFilePath()
         {
-            Parser.Parse("");
+            string filePath = "";
+            var ex = Assert.Throws<ArgumentException>(() => Parser.Parse(filePath));
+
+            Assert.That(ex?.Message, Is.EqualTo("File path is invalid"));
         }
 
-        [TestMethod]
-        [ExpectedExceptionWithMessage(typeof(FileNotFoundException), "File Doesntexist.gpx doesn't exist")]
+        [TestCase]
         public void Parser_Parse_FailsIfFileDoesNotExist()
         {
-            Parser.Parse("Doesntexist.gpx");
+            string filePath = "Doesntexist.gpx";
+            var ex = Assert.Throws<FileNotFoundException>(() => Parser.Parse(filePath));
+
+            Assert.That(ex?.Message, Is.EqualTo("File Doesntexist.gpx doesn't exist"));
         }
 
-        [TestMethod]
-        [ExpectedExceptionWithMessage(typeof(ParserException), "Failed to parse TestData/NotGPX.xml, ensure it is in the correct format.")]
+        [TestCase]
         public void Parser_Parse_FailsWithInvalidFile()
         {
-            Parser.Parse(Path.Combine(TestDataDir, "NotGPX.xml"));
+            string filePath = Path.Combine(TestDataDir, "NotGPX.xml");
+            var ex = Assert.Throws<ParserException>(() => Parser.Parse(filePath));
+
+            Assert.That(ex?.Message, Is.EqualTo($"Failed to parse {filePath}, ensure it is in the correct format."));
         }
 
-        [TestMethod]
+        [TestCase]
         public void Parser_Parse_LoadValidFile()
         {
             var gpxFile = Parser.Parse(Path.Combine(TestDataDir, "SimpleGPX.gpx"));
 
-            Assert.AreEqual("connect.garmin.com", gpxFile.metadata.link[0].href);
-            Assert.AreEqual("Garmin Connect", gpxFile.metadata.link[0].text);
-            Assert.AreEqual(new DateTime(2020, 01, 01, 12, 00, 00), gpxFile.metadata.time);
-            Assert.AreEqual("Sample Running", gpxFile.trk[0].name);
-            Assert.AreEqual("running", gpxFile.trk[0].type);
-            Assert.AreEqual(2, gpxFile.trk[0].trkseg[0].trkpt.Length);
+            Assert.That(gpxFile.metadata.link[0].href, Is.EqualTo("connect.garmin.com"));
+            Assert.That(gpxFile.metadata.link[0].text, Is.EqualTo("Garmin Connect"));
+            Assert.That(gpxFile.metadata.time, Is.EqualTo(new DateTime(2020, 1, 1, 12, 0, 0, DateTimeKind.Utc)));
+            Assert.That(gpxFile.trk[0].name, Is.EqualTo("Sample Running"));
+            Assert.That(gpxFile.trk[0].type, Is.EqualTo("running"));
+            Assert.That(gpxFile.trk[0].trkseg[0].trkpt.Length, Is.EqualTo(2));
 
             // First track point.
-            Assert.AreEqual(10.0M, gpxFile.trk[0].trkseg[0].trkpt[0].ele);
-            Assert.AreEqual(52.0M, gpxFile.trk[0].trkseg[0].trkpt[0].lat);
-            Assert.AreEqual(0.0M, gpxFile.trk[0].trkseg[0].trkpt[0].lon);
-            Assert.AreEqual(new DateTime(2020, 01, 01, 12, 00, 00), gpxFile.trk[0].trkseg[0].trkpt[0].time);
+            Assert.That(gpxFile.trk[0].trkseg[0].trkpt[0].ele, Is.EqualTo(10.0M));
+            Assert.That(gpxFile.trk[0].trkseg[0].trkpt[0].lat, Is.EqualTo(52.0M));
+            Assert.That(gpxFile.trk[0].trkseg[0].trkpt[0].lon, Is.EqualTo(0.0M));
+            Assert.That(gpxFile.trk[0].trkseg[0].trkpt[0].time, Is.EqualTo(new DateTime(2020, 1, 1, 12, 0, 0, DateTimeKind.Utc)));
 
             // Second track point.
-            Assert.AreEqual(10.1M, gpxFile.trk[0].trkseg[0].trkpt[1].ele);
-            Assert.AreEqual(52.1M, gpxFile.trk[0].trkseg[0].trkpt[1].lat);
-            Assert.AreEqual(0.1M, gpxFile.trk[0].trkseg[0].trkpt[1].lon);
-            Assert.AreEqual(new DateTime(2020, 01, 01, 12, 01, 00), gpxFile.trk[0].trkseg[0].trkpt[1].time);
+            Assert.That(gpxFile.trk[0].trkseg[0].trkpt[1].ele, Is.EqualTo(10.1M));
+            Assert.That(gpxFile.trk[0].trkseg[0].trkpt[1].lat, Is.EqualTo(52.1M));
+            Assert.That(gpxFile.trk[0].trkseg[0].trkpt[1].lon, Is.EqualTo(0.1M));
+            Assert.That(gpxFile.trk[0].trkseg[0].trkpt[1].time, Is.EqualTo(new DateTime(2020, 1, 1, 12, 1, 0, DateTimeKind.Utc)));
         }
 
-        [TestMethod]
+        [TestCase]
         public void Parser_Parse_LoadValidFile_WithWptData()
         {
             var filePath = Path.Combine(TestDataDir, "WPT.gpx");
 
-            Assert.IsTrue(File.Exists(filePath), $"Test file {Path.GetFullPath(filePath)} does not exist");
+            Assert.That(File.Exists(filePath), $"Test file {Path.GetFullPath(filePath)} does not exist");
 
             var gpxFile = Parser.Parse(filePath);
 
             // No metadata or trk data.
-            Assert.IsNull(gpxFile.metadata);
-            Assert.IsNull(gpxFile.trk);
+            Assert.That(gpxFile.metadata, Is.Null);
+            Assert.That(gpxFile.trk, Is.Null);
 
             // Should have 3 WPT entries.
-            Assert.AreEqual(3, gpxFile.wpt.Length);
+            Assert.That(gpxFile.wpt.Length, Is.EqualTo(3));
 
             // First wpt.
-            Assert.AreEqual(46.0M, gpxFile.wpt[0].lat);
-            Assert.AreEqual(9.0M, gpxFile.wpt[0].lon);
-            Assert.AreEqual(46.1M, gpxFile.wpt[0].ele);
-            Assert.AreEqual("WPT data 1", gpxFile.wpt[0].name);
-            Assert.AreEqual("Description", gpxFile.wpt[0].desc);
+            Assert.That(gpxFile.wpt[0].lat, Is.EqualTo(46.0M));
+            Assert.That(gpxFile.wpt[0].lon, Is.EqualTo(9.0M));
+            Assert.That(gpxFile.wpt[0].ele, Is.EqualTo(46.1M));
+            Assert.That(gpxFile.wpt[0].name, Is.EqualTo("WPT data 1"));
+            Assert.That(gpxFile.wpt[0].desc, Is.EqualTo("Description"));
 
             // Second wpt.
-            Assert.AreEqual(42.5M, gpxFile.wpt[1].lat);
-            Assert.AreEqual(9.5M, gpxFile.wpt[1].lon);
-            Assert.AreEqual(46.2M, gpxFile.wpt[1].ele);
-            Assert.AreEqual("WPT data 2", gpxFile.wpt[1].name);
-            Assert.AreEqual("Description", gpxFile.wpt[1].desc);
+            Assert.That(gpxFile.wpt[1].lat, Is.EqualTo(42.5M));
+            Assert.That(gpxFile.wpt[1].lon, Is.EqualTo(9.5M));
+            Assert.That(gpxFile.wpt[1].ele, Is.EqualTo(46.2M));
+            Assert.That(gpxFile.wpt[1].name, Is.EqualTo("WPT data 2"));
+            Assert.That(gpxFile.wpt[1].desc, Is.EqualTo("Description"));
 
             // Third wpt.
-            Assert.AreEqual(43.3M, gpxFile.wpt[2].lat);
-            Assert.AreEqual(-1.1M, gpxFile.wpt[2].lon);
-            Assert.AreEqual(46.3M, gpxFile.wpt[2].ele);
-            Assert.AreEqual("WPT data 3", gpxFile.wpt[2].name);
-            Assert.AreEqual("Description", gpxFile.wpt[2].desc);
+            Assert.That(gpxFile.wpt[2].lat, Is.EqualTo(43.3M));
+            Assert.That(gpxFile.wpt[2].lon, Is.EqualTo(-1.1M));
+            Assert.That(gpxFile.wpt[2].ele, Is.EqualTo(46.3M));
+            Assert.That(gpxFile.wpt[2].name, Is.EqualTo("WPT data 3"));
+            Assert.That(gpxFile.wpt[2].desc, Is.EqualTo("Description"));
         }
     }
 }
