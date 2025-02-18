@@ -2,7 +2,7 @@ using GpxParser;
 using NUnit.Framework;
 using System;
 
-namespace GPXParserUnitTests
+namespace GpxParserUnitTests
 {
     [TestFixture]
     public class gpxTypeUnitTests
