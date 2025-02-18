@@ -29,7 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GPXParser\GPXParser.csproj" />
+    <ProjectReference Include="..\GpxParser\GpxParser.csproj" />
   </ItemGroup>
 
   <ItemGroup>
