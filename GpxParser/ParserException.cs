@@ -1,21 +1,12 @@
 ﻿using System;
 
-namespace GPXParser
+namespace GpxParser
 {
     /// <summary>
     /// Exception class for GPX Parser related exceptions.
     /// </summary>
     public class ParserException : Exception
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ParserException"/> class.
-        /// </summary>
-        public ParserException()
-            : base()
-        {
-            // Nothing to do.
-        }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ParserException"/> class.
         /// </summary>
